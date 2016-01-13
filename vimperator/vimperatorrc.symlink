@@ -1,0 +1,14 @@
+" Swap ; and :  Convenient.
+nnoremap ; :
+nnoremap : ;
+
+" keymaps for Google searching
+nnoremap S tgoogle 
+nnoremap s ogoogle 
+
+" Use letters instead of numbers for links
+set hintchars=asdfhjkl;
+
+" Finlay:
+" > ever get annoyed by google groups and youtube stealing your focus in vimperator?
+autocmd PageLoad (www\\.youtube|groups.google|web.telegram)\\.com :normal <Esc>
