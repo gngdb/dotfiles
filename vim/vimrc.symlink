@@ -1,4 +1,124 @@
-syntax on
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+source $VIMRUNTIME/mswin.vim
 
-" Wrap gitcommit file types at the appropriate length
-filetype indent plugin on
+" for Python, mainly
+set tabstop=4
+set expandtab
+set smarttab
+set shiftwidth=4
+set softtabstop=4
+
+set nocompatible
+set showcmd
+
+" English spellchecking and spellcheck default (write way more TeX than
+" anything else)
+if version >= 700
+   set spl=en spell
+   set nospell
+   autocmd BufNewFile,BufRead *.tex set spell
+   autocmd BufNewFile,BufRead *.md set spell
+   autocmd BufNewFile,BufRead *.txt set spell
+endif
+
+" Enable mouse support in console
+set mouse=a
+
+" Enable line numbers
+set number
+
+" Ignoring case in searches
+set ignorecase
+
+" Use jj as esc
+inoremap jj <Esc>
+nnoremap JJJJ <Nop>
+
+" Highlight things that we find with the search
+set hlsearch
+
+" Setup clipboard to work in linux
+let g:clipbrdDefaultReg = '+'
+
+" When I close a tab, remove the buffer
+set nohidden
+
+" Set off the other paren
+highlight MatchParen ctermbg=4
+
+"{{{Look and Feel
+
+" Color Scheme
+if has("gui_running")
+    set background=light
+    colorscheme solarized
+    set guifont=Terminus\ 9
+else
+    set background=dark
+    colorscheme solarized
+endif
+
+" Space will toggle folds!
+nnoremap <space> za
+
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+map N Nzz
+map n nzz
+
+" Swap ; and :  Convenient.
+nnoremap ; :
+nnoremap : ;
+
+filetype plugin indent on
+filetype plugin on
+syntax on
+" Set up for markdown processing
+au BufNewFile,BufRead *.md set filetype=mkd
+au BufNewFile,BufRead *.md set textwidth=75
+au BufNewFile,BufRead *.mdk set filetype=mkd
+au BufNewFile,BufRead *.mdk set textwidth=75
+
+" Unbind the cursor keys in insert, normal and visual modes
+for prefix in ['i', 'n', 'v']
+    for key in ['<Up>', '<Down>', '<Left>', '<Right>']
+        exe prefix . "noremap " . key . " <Nop>"
+    endfor
+endfor
+
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor = "latex"
+
+" just in case not in runtime path
+set runtimepath=~/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,~/.vim/after
+
+" Don't see why it shouldn't be easier to switch tabs
+nnoremap t gt
+nnoremap T gT
+
+" Setting up latexsuite
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_ViewRule_pdf = 'evince'
+let g:Tex_MultipleCompileFormats = 'pdf'
+
+" Editor encoding for latex files
+set encoding=utf-8
+set fileencoding=utf-8
+
+" To stop wrap
+set tw=0
+
+" To get good tab completion in menu
+" from http://stackoverflow.com/questions/526858/how-do-i-make-vim-do-normal-bash-like-tab-completion-for-file-names
+set wildmode=longest,list,full
+set wildmenu
+
+" Set up backupdir
+set backupdir=~/tmp
+
+" Set up pathogen
+execute pathogen#infect()
+
+" For airline
+set laststatus=2
