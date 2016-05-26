@@ -110,10 +110,13 @@ set wildmode=longest,list,full
 set wildmenu
 
 " Set up backupdir
-set backupdir=~/tmp
+set backupdir=~/vimbackups
 
 " For airline
 set laststatus=2
 
 " Set up pathogen
 execute pathogen#infect()
+
+" Toggling paste when pasting into vim
+" set pastetoggle=]
