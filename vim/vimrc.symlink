@@ -22,8 +22,8 @@ if version >= 700
    autocmd BufNewFile,BufRead *.txt set spell
 endif
 
-" Enable mouse support in console
-set mouse=a
+" Disable mouse in console
+set mouse=
 
 " Enable line numbers
 set number
@@ -50,14 +50,8 @@ highlight MatchParen ctermbg=4
 "{{{Look and Feel
 
 " Color Scheme
-if has("gui_running")
-    set background=light
-    colorscheme solarized
-    set guifont=Terminus\ 9
-else
-    set background=dark
-    colorscheme solarized
-endif
+syntax on
+set background=dark
 
 " Space will toggle folds!
 nnoremap <space> za
@@ -73,12 +67,13 @@ nnoremap : ;
 
 filetype plugin indent on
 filetype plugin on
-syntax on
 " Set up for markdown processing
 au BufNewFile,BufRead *.md set filetype=mkd
 au BufNewFile,BufRead *.md set textwidth=75
 au BufNewFile,BufRead *.mdk set filetype=mkd
 au BufNewFile,BufRead *.mdk set textwidth=75
+au BufNewFile,BufRead *.markdown set filetype=mkd
+au BufNewFile,BufRead *.markdown set textwidth=75
 
 " Unbind the cursor keys in insert, normal and visual modes
 for prefix in ['i', 'n', 'v']
@@ -115,10 +110,13 @@ set wildmode=longest,list,full
 set wildmenu
 
 " Set up backupdir
-set backupdir=~/tmp
+set backupdir=~/vimbackups
+
+" For airline
+set laststatus=2
 
 " Set up pathogen
 execute pathogen#infect()
 
-" For airline
-set laststatus=2
+" Toggling paste when pasting into vim
+" set pastetoggle=]

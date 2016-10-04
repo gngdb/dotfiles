@@ -1,8 +1,5 @@
 export EDITOR="vim"
 
-# Check if reboot is required when starting a shell
-[[ "$PS1" ]] && rebootcheck
-
 # Following from Arch wiki
 ##########################################################
 ############# Colours in bash config #####################
@@ -77,3 +74,19 @@ PS4="+ "
 ##########################################################
 ############# Colours in bash config  end ################
 ##########################################################
+
+# added by Miniconda3 3.19.0 installer
+export PATH="/home/gavin/miniconda3/bin:$PATH"
+
+# ssh-agent
+if ! pgrep -u $USER ssh-agent > /dev/null; then
+        ssh-agent > ~/.ssh-agent-thing
+ fi
+    if [[ "$SSH_AGENT_PID" == "" ]]; then
+            eval $(<~/.ssh-agent-thing)
+    fi
+ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias ssh; ssh'
+
+# enable thefuck out of this
+eval "$(thefuck --alias)"
+
