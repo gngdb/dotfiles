@@ -9,7 +9,6 @@ set smarttab
 set shiftwidth=4
 set softtabstop=4
 
-set nocompatible
 set showcmd
 
 " English spellchecking and spellcheck default (write way more TeX than
@@ -40,9 +39,6 @@ set hlsearch
 
 " Setup clipboard to work in linux
 let g:clipbrdDefaultReg = '+'
-
-" When I close a tab, remove the buffer
-set nohidden
 
 " Set off the other paren
 highlight MatchParen ctermbg=4
@@ -117,6 +113,39 @@ set laststatus=2
 
 " Set up pathogen
 execute pathogen#infect()
+" Enable the list of buffers in airline
+let g:airline#extensions#tabline#enabled = 1
+" and show just the filename
+let g:airline#extensions#tabline#fnamemod = ':t'
 
-" Toggling paste when pasting into vim
-" set pastetoggle=]
+" For breaking tab habits: http://joshldavis.com/2014/04/05/vim-tab-madness-buffers-vs-tabs/
+" This allows buffers to be hidden if you've modified a buffer.
+" This is almost a must if you wish to use buffers in this way.
+set hidden
+
+" Have to set a mapleader, somehow it is unset
+let mapleader=','
+
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nmap <leader>T ;enew<cr>
+
+" Move to the next buffer
+nmap <leader>l ;bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>h ;bprevious<CR>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>bq ;bp <BAR> bd #<CR>
+
+" Show all open buffers and their status
+nmap <leader>bl ;ls<CR>"
+
+" Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
+nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
+nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
+nnoremap <silent><C-n> :set paste<CR>m`o<Esc>``:set nopaste<CR>
+nnoremap <silent><C-m> :set paste<CR>m`O<Esc>``:set nopaste<CR>
+
