@@ -149,3 +149,10 @@ nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
 nnoremap <silent><C-n> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><C-m> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
+" Easier window switching
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+nnoremap <C-S> <C-W><C-S>
+nnoremap <C-V> <C-W><C-V>
