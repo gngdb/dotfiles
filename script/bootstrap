@@ -152,5 +152,8 @@ then
   fi
 fi
 
+# vimrc happens to put backups here, so it needs to be created
+mkdir ~/vimbackups
+
 echo ''
 echo '  All installed!'
