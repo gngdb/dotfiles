@@ -156,3 +156,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-S> <C-W><C-S>
 nnoremap <C-V> <C-W><C-V>
+
+" Relative line numbering
+set number                     " show line numbers
+set relativenumber             " show line numbers as relative offsets
