@@ -1,0 +1,12 @@
+# reload config file (change file location to your the tmux.conf you want to use)
+bind r source-file ~/.tmux.conf
+# switch panes using Alt-hjkl without prefix
+bind -n M-h select-pane -L
+bind -n M-l select-pane -R
+bind -n M-j select-pane -U
+bind -n M-k select-pane -D
+# have to add this otherwise esc triggers pane switching
+# https://stackoverflow.com/questions/43009211/how-to-disable-pane-switching-with-esc-in-tmux
+set -s escape-time 0
+# send the prefix to client inside window
+bind-key -n C-t send-prefix
