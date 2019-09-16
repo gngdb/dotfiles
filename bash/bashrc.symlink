@@ -99,10 +99,39 @@ DATE=`date +%Y-%m-%d`
 export BACKUPLOC=$HOME/storage/downloads/termux_$DATE.tar.gz
 alias termux-backup='tar -czvf $BACKUPLOC --exclude=$HOME/storage $TERMUX'
 
-# always open tmux
+# always open tmux on ssh
 if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
     tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
 fi
 
 # alias for git https credential storing
 alias git-store-credentials='git config credential.helper store'
+
+# this was for i3 but isn't actually used
+if [[ $HOSTNAME == vws83 ]]; then
+    export TERMINAL=rxvt-unicode
+fi
+
+
+# https://stackoverflow.com/questions/10735574/include-source-script-if-it-exists-in-bash 
+# for alias to quick start project environments/other shortcuts
+include () {
+        [[ -f "$1" ]] && source "$1"
+    }
+include .projectsrc
+
+# for tmux autocomplete
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+fi
+# https://www.nathankowald.com/blog/2014/03/tmux-attach-session-alias/
+_tma() {
+    TMUX_SESSIONS=$(tmux ls -F '#S' | xargs)
+
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "$TMUX_SESSIONS" -- $cur) )
+}
+complete -F _tma tma
+tma() { tmux attach -t $1 ;}
+complete -F _tma tma
+tmc() { tmux new-session -t $1 ;}

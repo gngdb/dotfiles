@@ -68,7 +68,7 @@ URxvt*scrollBar:                        false
 ! URxvt*path:                           search path
 ! URxvt*backgroundPixmap:               file[;geom]
 ! URxvt*iconFile:                       file
-URxvt*font:                             xft:Inconsolata:size=12:antialias=true
+URxvt*font:                             xft:Inconsolata:size=10:antialias=true
 ! URxvt*boldFont:                       fontname
 ! URxvt*italicFont:                     fontname
 ! URxvt*boldItalicFont:                 fontname
@@ -201,4 +201,13 @@ URxvt*font:                             xft:Inconsolata:size=12:antialias=true
 *color13:                 S_violet
 *color14:                 S_base1
 *color15:                 S_base3
+
+! for ctrl-shift-c/v copy/paste
+! https://unix.stackexchange.com/questions/444773/how-to-disable-the-ctrlshift-binding-iso-14755-in-urxvt
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+! https://unix.stackexchange.com/questions/294337/rebinding-ctrl-alt-cv-to-ctrl-shift-cv-in-urxvt-9-20
+URxvt.keysym.C-M-c: builtin-string:
+URxvt.keysym.Shift-Control-V: eval:paste_clipboard
+URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 
