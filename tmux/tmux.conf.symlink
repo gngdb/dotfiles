@@ -10,3 +10,6 @@ bind -n M-k select-pane -D
 set -s escape-time 0
 # send the prefix to client inside window
 bind-key -n C-t send-prefix
+# so editing bashrc induces changes
+# https://unix.stackexchange.com/questions/320465/new-tmux-sessions-do-not-source-bashrc-file
+set-option -g default-shell "/bin/bash"

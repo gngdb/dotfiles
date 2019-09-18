@@ -14,3 +14,4 @@ git clone https://github.com/vim-airline/vim-airline.git
 git clone https://github.com/altercation/vim-colors-solarized.git
 git clone https://github.com/tpope/vim-fugitive.git
 git clone https://github.com/airblade/vim-gitgutter.git
+git clone https://github.com/airblade/vim-unimpaired.git

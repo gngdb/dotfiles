@@ -153,4 +153,4 @@ bar {
 bindsym --release $mod+p exec --no-startup-id xdotool key --clearmodifiers shift+Insert
 
 # screen lock shortcut
-bindsym $mod+Shift+x exec i3lock
+bindsym $mod+Shift+x exec i3lock -i ~/i3lock-background.png

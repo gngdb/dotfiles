@@ -76,7 +76,7 @@ PS4="+ "
 ##########################################################
 
 # added by Miniconda3 3.19.0 installer
-export PATH="/home/gavin/miniconda3/bin:$PATH"
+# export PATH="/home/gavin/miniconda3/bin:$PATH"  # commented out by conda initialize
 
 # ssh-agent
 if ! pgrep -u $USER ssh-agent > /dev/null; then
@@ -88,7 +88,7 @@ fi
 ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias ssh; ssh'
 
 # added by Miniconda3 4.0.5 installer
-export PATH="/home/gavin/miniconda3/bin:$PATH"
+# export PATH="/home/gavin/miniconda3/bin:$PATH"  # commented out by conda initialize
 
 # added for mosh compatibility
 export LANG="en_GB.UTF-8"
@@ -118,7 +118,7 @@ fi
 include () {
         [[ -f "$1" ]] && source "$1"
     }
-include .projectsrc
+include ~/.projectsrc
 
 # for tmux autocomplete
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
@@ -135,3 +135,27 @@ complete -F _tma tma
 tma() { tmux attach -t $1 ;}
 complete -F _tma tma
 tmc() { tmux new-session -t $1 ;}
+
+# for making lockscreen images
+set-i3lock-bg() { 
+        if [ ! -f ~/lock.png ]; then
+            curl https://raw.githubusercontent.com/meskarune/i3lock-fancy/master/icons/lock.png > ~/lock.png
+        fi
+        SIZE=`xdpyinfo | grep dimensions | cut -d " "  -f 7`
+        convert $1 -font Liberation-Sans \
+       -geometry $SIZE -gravity center\
+       -blur 5x8 \
+       -pointsize 26 -fill white \
+       -background black -extent $SIZE -gravity center \
+       -annotate +0+160 "Type Password to Unlock" ~/lock.png \
+       -gravity center -composite ~/i3lock-background.png
+}
+
+# Arch Wiki SSH-keygen
+ssh-keygen-archdefault() { ssh-keygen -C "$(whoami)@$(hostname)-$(date -I) -b 4096" ;}
+
+# shortcuts I'm trying to learn
+echo "vim"
+echo "  paste on prev/next line [p/]p"
+
+
