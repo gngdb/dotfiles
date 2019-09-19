@@ -99,11 +99,6 @@ DATE=`date +%Y-%m-%d`
 export BACKUPLOC=$HOME/storage/downloads/termux_$DATE.tar.gz
 alias termux-backup='tar -czvf $BACKUPLOC --exclude=$HOME/storage $TERMUX'
 
-# always open tmux on ssh
-if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ]; then
-    tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
-fi
-
 # alias for git https credential storing
 alias git-store-credentials='git config credential.helper store'
 
