@@ -75,9 +75,6 @@ PS4="+ "
 ############# Colours in bash config  end ################
 ##########################################################
 
-# added by Miniconda3 3.19.0 installer
-# export PATH="/home/gavin/miniconda3/bin:$PATH"  # commented out by conda initialize
-
 # ssh-agent
 if ! pgrep -u $USER ssh-agent > /dev/null; then
     ssh-agent > ~/.ssh-agent-thing
@@ -86,9 +83,6 @@ if [[ "$SSH_AGENT_PID" == "" ]]; then
     eval $(<~/.ssh-agent-thing)
 fi
 ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias ssh; ssh'
-
-# added by Miniconda3 4.0.5 installer
-# export PATH="/home/gavin/miniconda3/bin:$PATH"  # commented out by conda initialize
 
 # added for mosh compatibility
 export LANG="en_GB.UTF-8"
@@ -100,9 +94,9 @@ export BACKUPLOC=$HOME/storage/downloads/termux_$DATE.tar.gz
 alias termux-backup='tar -czvf $BACKUPLOC --exclude=$HOME/storage $TERMUX'
 
 # always open tmux in termux
-if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ] && [ "$SSH_CONNECTION" != "" ]; then
-    tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
-fi
+# if [[ -z "$TMUX" ]] && [ "$SSH_CONNECTION" != "" ] && [ "$SSH_CONNECTION" != "" ]; then
+#    tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
+# fi
 
 # function for ssh with automatic retry to a named tmux session
 # forever-terminal <hostname> <tmux session name>
@@ -170,6 +164,59 @@ set-i3lock-bg() {
 
 # Arch Wiki SSH-keygen
 ssh-keygen-archdefault() { ssh-keygen -C "$(whoami)@$(hostname)-$(date -I) -b 4096" ;}
+
+# I always forget conda remove syntax
+condont() { conda remove --name $1 --all ;}
+
+# for adding environment variables to conda envs
+# https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#macos-and-linux
+# conda-addto-env <var to set> <what to set it to>
+conda-addto-env() {
+    mkdir -p $CONDA_PREFIX/etc/conda/activate.d
+    mkdir -p $CONDA_PREFIX/etc/conda/deactivate.d
+    TO_SET="export $1=$2"
+    CENV_FILE=$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+    read -p "writing $TO_SET to $CENV_FILE, y/n? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        echo $TO_SET >> $CENV_FILE
+    else
+        echo "no response or n, not writing"
+        return
+    fi
+    # just reset variables to whatever they're set when you run a new shell
+    RESET_VARS=`bash -lc "env" | grep $1`
+    for var in $RESET_VARS
+    do
+        echo "export $var" >> $CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh
+    done
+    # if it wasn't set to anything, just unset it
+    if [[ -z ${RESET_VARS} ]]; then
+        echo "unset $1" >> $CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh
+    fi
+    # cat the files, so we know what's in there
+    echo "File contents $CENV_FILE:"
+    cat $CENV_FILE | sed 's/^/  /' 
+    echo "File contents $CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh:"
+    cat $CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh | sed 's/^/  /' 
+}
+
+# to clean up vars from the previous command
+conda-clean-env() {
+    ACTIVATE=$CONDA_PREFIX/etc/conda/activate.d/env_vars.sh
+    DEACTIVATE=$CONDA_PREFIX/etc/conda/deactivate.d/env_vars.sh 
+    read -p "cleaning env files $ACTIVATE and $DEACTIVATE, y/n? " -n 1 -r
+    echo    # (optional) move to a new line
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        echo "mving to env_vars.sh.backup"
+        mv $ACTIVATE $ACTIVATE.backup
+        mv $DEACTIVATE $DEACTIVATE.backup
+    fi
+}
+
+
 
 # shortcuts I'm trying to learn
 echo "vim"
