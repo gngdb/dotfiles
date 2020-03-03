@@ -1,3 +1,7 @@
+# If not running interactively, don't do anything
+[[ $- == *i* ]] || return
+# because https://unix.stackexchange.com/questions/18231/scp-fails-without-error
+
 export EDITOR="vim"
 
 # Following from Arch wiki
@@ -216,9 +220,12 @@ conda-clean-env() {
     fi
 }
 
-
-
 # shortcuts I'm trying to learn
 echo "vim"
 echo "  paste on prev/next line [p/]p"
 
+# generating passwords https://unix.stackexchange.com/questions/230673/how-to-generate-a-random-string
+alias mkpw="head /dev/urandom | tr -dc A-Za-z0-9 | head -c 13 ; echo ''"
+
+# https://stackoverflow.com/questions/1795976/can-the-unix-list-command-ls-output-numerical-chmod-permissions 
+alias cls="ls -la | awk '{k=0;for(i=0;i<=8;i++)k+=((substr(\$1,i+2,1)~/[rwx]/)*2^(8-i));if(k)printf(\"%0o \",k);print}'"
