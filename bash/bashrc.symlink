@@ -87,6 +87,12 @@ if [[ "$SSH_AGENT_PID" == "" ]]; then
     eval $(<~/.ssh-agent-thing)
 fi
 ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias ssh; ssh'
+# if the ssh-agent-thing file is lost
+refresh-agent() {
+    pkill -u $USER ssh-agent
+    ssh-agent > ~/.ssh-agent-thing
+    ssh-add
+}
 
 # added for mosh compatibility
 export LANG="en_GB.UTF-8"
