@@ -13,3 +13,5 @@ bind-key -n C-t send-prefix
 # so editing bashrc induces changes
 # https://unix.stackexchange.com/questions/320465/new-tmux-sessions-do-not-source-bashrc-file
 set-option -g default-shell "/bin/bash"
+# so copying works
+set-window-option -g mode-keys vi
