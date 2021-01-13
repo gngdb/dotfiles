@@ -161,3 +161,29 @@ nnoremap <C-L> <C-W><C-W>
 " Relative line numbering
 set number                     " show line numbers
 set relativenumber             " show line numbers as relative offsets
+
+" Triger `autoread` when files changes on disk
+" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+" Notification after file change
+" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+
+" https://stackoverflow.com/questions/4465095/vim-delete-buffer-without-losing-the-split-window/4468491
+" ctrl-C closes current buffer, but doesn't exit split
+nnoremap <C-c> :bp\|bd #<CR>
+
+" https://stackoverflow.com/questions/13899677/auto-disable-spell-checking-in-help-text
+" to disable spell checking in .bib files
+autocmd BufEnter *.bib set nospell
+autocmd BufLeave *.bib set spell
+" and then the same to make it easy to paste into bib files
+autocmd BufEnter *.bib set paste
+autocmd BufLeave *.bib set nopaste
+
+" https://stackoverflow.com/questions/8292742/vim-cursor-jumps-to-beginning-of-the-line-after-buffer-switch
+" stop vim from moving back to start of line every time I switch buffers
+set nostartofline
+
