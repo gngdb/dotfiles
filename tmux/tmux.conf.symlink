@@ -5,6 +5,9 @@ bind -n M-h select-pane -L
 bind -n M-l select-pane -R
 bind -n M-j select-pane -U
 bind -n M-k select-pane -D
+# switch windows
+bind -n M-n next-window
+bind -n M-p next-window
 # have to add this otherwise esc triggers pane switching
 # https://stackoverflow.com/questions/43009211/how-to-disable-pane-switching-with-esc-in-tmux
 set -s escape-time 0
